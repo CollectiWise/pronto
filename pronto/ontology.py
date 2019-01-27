@@ -210,6 +210,7 @@ class Ontology(collections.Mapping):
                 not name a `BaseParser`.
 
         """
+	
         force, parsers = self._get_parsers(parser)
 
         try:
@@ -221,6 +222,7 @@ class Ontology(collections.Mapping):
 
         for p in parsers:
             if p.hook(path=self.path, force=force, lookup=lookup):
+		
                 self.meta, self.terms, self.imports, self.typedefs = p.parse(stream)
                 self._parsed_by = p.__name__
                 break

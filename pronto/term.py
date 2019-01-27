@@ -3,9 +3,9 @@
 """
 from __future__ import unicode_literals
 from __future__ import absolute_import
-
+import operator
 import six
-
+import json
 from .description import Description
 from .relationship import Relationship
 from .utils import output_str, unique_everseen
@@ -86,6 +86,13 @@ class Term(object):
             )
 
         return self._parents
+
+    @property
+    def json(self):
+        """str: the term serialized in json format.
+        """
+        return json.dumps({self.id:self},  indent=4, sort_keys=True,
+                          default=operator.attrgetter("__deref__"))
 
     @property
     def children(self):

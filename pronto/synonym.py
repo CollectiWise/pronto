@@ -23,7 +23,7 @@ class SynonymType(object):
 
     """
 
-    __slots__ = ['name', 'desc', 'scope']
+    __slots__ = ['name', 'desc', 'scope', 'synonym']
     _instances = collections.OrderedDict()
     _RX_OBO_EXTRACTER = re.compile(r'(?P<name>[^ ]*)[ ]*\"(?P<desc>.*)\"[ ]*(?P<scope>BROAD|NARROW|EXACT|RELATED)?')
 
@@ -107,7 +107,7 @@ class Synonym(object):
             self.scope = scope.decode('utf-8')
         elif isinstance(scope, six.text_type):
             self.scope = scope
-        elif scope is None:
+        else:
             self.scope = "RELATED"
 
         if syn_type is not None:
@@ -115,7 +115,9 @@ class Synonym(object):
                 self.syn_type = SynonymType._instances[syn_type]
                 self.scope = self.syn_type.scope or self.scope or 'RELATED'
             except KeyError as e:
-                raise ValueError("Undefined synonym type: {}".format(syn_type))
+		print syn_type
+	        self.syn_type=syn_type
+                #raise ValueError("Undefined synonym type: {}".format(syn_type))
         else:
             self.syn_type = None
 

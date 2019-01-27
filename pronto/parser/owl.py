@@ -1,8 +1,15 @@
 # coding: utf-8
 """Definition of the Owl parser.
 """
+
+
 from __future__ import unicode_literals
 from __future__ import absolute_import
+
+import sys
+
+reload(sys)
+sys.setdefaultencoding("ISO-8859-1")
 
 import itertools
 import collections
@@ -24,7 +31,8 @@ from ..relationship import Relationship
 from ..synonym import Synonym
 from ..term import Term
 from ..utils import nowarnings
-
+#parser = etree.XMLParser(recover=True)
+parser = etree.XMLParser(encoding="utf-8")
 
 RDF_ABOUT = "{{{}}}{}".format(owl_ns['rdf'], 'about')
 RDF_RESOURCE = "{{{}}}{}".format(owl_ns['rdf'], 'resource')
@@ -59,9 +67,10 @@ class OwlXMLParser(BaseParser):
     @classmethod
     @nowarnings
     def parse(cls, stream):  # noqa: D102
+        #print stream;
 
-        tree = etree.parse(stream)
-
+        tree = etree.parse(stream, parser=parser)
+	   
         meta = cls._extract_resources(tree.find(OWL_ONTOLOGY))
         terms = collections.OrderedDict()
 
@@ -123,6 +132,9 @@ class OwlXMLParser(BaseParser):
     def _extract_resources(elem):
         """Extract the children of an element as a key/value mapping.
         """
+	if elem is None:
+	    print 'none'
+	    return dict()
         resources = collections.defaultdict(list)
         for child in itertools.islice(elem.iter(), 1, None):
             try:
