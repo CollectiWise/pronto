@@ -114,9 +114,8 @@ class Synonym(object):
             try:
                 self.syn_type = SynonymType._instances[syn_type]
                 self.scope = self.syn_type.scope or self.scope or 'RELATED'
-            except KeyError as e:
-		#print syn_type
-	        self.syn_type=syn_type
+            except:
+                self.syn_type=syn_type
                 #raise ValueError("Undefined synonym type: {}".format(syn_type))
         else:
             self.syn_type = None

@@ -8,8 +8,18 @@ from __future__ import absolute_import
 
 import sys
 
-reload(sys)
-sys.setdefaultencoding("ISO-8859-1")
+try:
+    reload(sys)  # Python 2.7
+    sys.setdefaultencoding("ISO-8859-1")  
+except NameError:
+    try:
+        from importlib import reload  # Python 3.4+
+        reload(sys)
+    except ImportError:
+        from imp import reload  # Python 3.0 - 3.3
+        reload(sys)
+
+
 
 import itertools
 import collections
@@ -132,9 +142,9 @@ class OwlXMLParser(BaseParser):
     def _extract_resources(elem):
         """Extract the children of an element as a key/value mapping.
         """
-	if elem is None:
-	    print 'none'
-	    return dict()
+        if elem is None:
+            print('none')
+            return dict()
         resources = collections.defaultdict(list)
         for child in itertools.islice(elem.iter(), 1, None):
             try:
