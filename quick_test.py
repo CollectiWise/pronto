@@ -15,10 +15,11 @@ import pronto
 
 
 sd   = pronto.Ontology('https://raw.githubusercontent.com/SDG-InterfaceOntology/sdgio/master/sdgio.owl')
-#print(sd.json)
-    
+print('SDGIO:00000061' in sd)
+   
+#gaz = pronto.Ontology('http://ontologies.berkeleybop.org/gaz.obo')
 
 envo = pronto.Ontology('https://raw.githubusercontent.com/EnvironmentOntology/envo/master/envo.obo')
-#print(envo.json)
+print('SDGIO:00000061' in envo)
 envo.merge(sd)
-print(envo.json)
+print('SDGIO:00000061' in envo)

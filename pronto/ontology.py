@@ -221,8 +221,9 @@ class Ontology(collections.Mapping):
             lookup = None
 
         for p in parsers:
+	    #print p 
             if p.hook(path=self.path, force=force, lookup=lookup):
-		
+		#print "in that loop", type(stream)
                 self.meta, self.terms, self.imports, self.typedefs = p.parse(stream)
                 self._parsed_by = p.__name__
                 break
@@ -275,7 +276,7 @@ class Ontology(collections.Mapping):
         relationships.sort(key=operator.itemgetter(2))
 
         for parent, rel, child in relationships:
-
+	    #print parent, rel, child
             if rel is None:
                 break
 

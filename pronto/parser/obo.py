@@ -51,7 +51,7 @@ class OboParser(BaseParser):
         next(_term_parser)
 
         for streamline in stream:
-
+	    #print streamline
             # manage encoding && cleaning of line
             streamline = cls._strip_comment(streamline.decode('utf-8'))
             if streamline[:1] in string.whitespace:
