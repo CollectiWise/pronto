@@ -100,6 +100,8 @@ class Relationship(object):
             self.prefix = prefix or ''
             self.direction = direction or ''
             self.comment = comment or ''
+            self.properties ={"symmetry": self.symmetry, "transitivity":self.transitivity, "reflexivity": self.reflexivity}
+            
             if aliases is not None:
                 self.aliases = [alias.decode('utf-8') if not isinstance(alias, six.text_type) else alias
                                     for alias in aliases]

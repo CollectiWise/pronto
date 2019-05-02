@@ -69,7 +69,7 @@ class Ontology(collections.Mapping):
 
     """
 
-    __slots__ = ("path", "meta", "terms", "imports", "_parsed_by", "typedefs")
+    __slots__ = ("path", "meta", "terms", "imports", "_parsed_by", "typedefs", "predicate_properties")
 
     def __init__(self, handle=None, imports=True, import_depth=-1, timeout=2, parser=None):
         """Create an `Ontology` instance from a file handle or a path.
@@ -95,6 +95,7 @@ class Ontology(collections.Mapping):
         self.terms = {}
         self.imports = ()
         self._parsed_by = None
+        self.predicate_properties={'transitivity':'transitivity'}
 
         if handle is None:
             self.path = None
@@ -118,7 +119,7 @@ class Ontology(collections.Mapping):
         self.adopt()
         self.resolve_imports(imports, import_depth, parser)
         self.reference()
-
+        
     def __repr__(self):
         if self.path is not None:
             return "Ontology(\"{}\")".format(self.path)
@@ -372,6 +373,8 @@ class Ontology(collections.Mapping):
 
         self.adopt()
         self.reference()
+    def include_json(self, json_snipped):
+        print(json_snipped)
 
     def merge(self, other):
         """Merge another ontology into the current one.
